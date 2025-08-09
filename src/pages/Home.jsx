@@ -106,4 +106,3 @@ const Home = ({ tasks = [], setTasks }) => {
 };
 
 export default Home;
-
