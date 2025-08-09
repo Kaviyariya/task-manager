@@ -2,7 +2,7 @@ import Home from './pages/Home'
 import Create from './pages/Create'
 import Edit from './pages/Edit'
 import LoginSignup from './pages/Login'
-import { Routes, Route, Link, Navigate, useLocation } from "react-router-dom";
+import { Routes, Route, Link } from "react-router-dom";
 import { useState, useEffect } from 'react';
 
 function App() {
@@ -19,45 +19,39 @@ function App() {
     localStorage.setItem("tasks", JSON.stringify(tasks));
   }, [tasks]);
 
-  const location = useLocation();
-
-  if (!isLoggedIn) {
-    return <LoginSignup setIsLoggedIn={setIsLoggedIn} />;
-  }
-
-  // Redirect logged in user from login/signup page to home
-  if (location.pathname === "/login" || location.pathname === "/signup") {
-    return <Navigate to="/" replace />;
-  }
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-black via-red-900 to-black text-white">
-      <nav className="w-full bg-gradient-to-r from-black via-red-900 to-black p-4 flex items-center gap-6 text-white font-semibold text-lg shadow-red-800 shadow-md">
-        <Link to="/" className="hover:underline">Home</Link>
-        <Link to="/create" className="hover:underline">Create New Task</Link>
-        <div className="flex-grow"></div>
-        <button
-          onClick={() => {
-            localStorage.removeItem("isLoggedIn");
-            setIsLoggedIn(false);
-          }}
-          className="hover:underline"
-        >
-          Logout
-        </button>
-      </nav>
+      {isLoggedIn ? (
+        <>
+          <nav className="w-full bg-gradient-to-r from-black via-red-900 to-black p-4 flex items-center gap-6 text-white font-semibold text-lg shadow-red-800 shadow-md">
+            <Link to="/" className="hover:underline">Home</Link>
+            <Link to="/create" className="hover:underline">Create New Task</Link>
+            <div className="flex-grow"></div>
+            <button
+              onClick={() => {
+                localStorage.removeItem("isLoggedIn");
+                setIsLoggedIn(false);
+              }}
+              className="hover:underline"
+            >
+              Logout
+            </button>
+          </nav>
 
-      <main className="p-6">
-        <Routes>
-          <Route path="/" element={<Home tasks={tasks} setTasks={setTasks} />} />
-          <Route path="/create" element={<Create setTasks={setTasks} />} />
-          <Route path="/edit/:id" element={<Edit tasks={tasks} setTasks={setTasks} />} />
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-      </main>
+          <main className="p-6">
+            <Routes>
+              <Route path="/" element={<Home tasks={tasks} setTasks={setTasks} />} />
+              <Route path="/create" element={<Create setTasks={setTasks} />} />
+              <Route path="/edit/:id" element={<Edit tasks={tasks} setTasks={setTasks} />} />
+              <Route path="*" element={<Home tasks={tasks} setTasks={setTasks} />} />
+            </Routes>
+          </main>
+        </>
+      ) : (
+        <LoginSignup setIsLoggedIn={setIsLoggedIn} />
+      )}
     </div>
   );
 }
 
 export default App;
-
