@@ -10,13 +10,17 @@ function App() {
     const savedTasks = localStorage.getItem("tasks");
     return savedTasks ? JSON.parse(savedTasks) : [];
   });
-  const [isLoggedIn, setIsLoggedIn] = useState(
-    localStorage.getItem("isLoggedIn") === "true"
-  );
+  const [isLoggedIn, setIsLoggedIn] = useState(() => {
+    return localStorage.getItem("isLoggedIn") === "true";
+  });
 
   useEffect(() => {
     localStorage.setItem("tasks", JSON.stringify(tasks));
   }, [tasks]);
+
+  useEffect(() => {
+    localStorage.setItem("isLoggedIn", isLoggedIn.toString());
+  }, [isLoggedIn]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-black via-red-900 to-black text-white">
@@ -39,15 +43,11 @@ function App() {
 
           <main className="p-6">
             <Routes>
-              {/* Both /home and / (root) render the Home component */}
               <Route path="/home" element={<Home tasks={tasks} setTasks={setTasks} />} />
-              <Route path="/" element={<Home tasks={tasks} setTasks={setTasks} />} />
-
+              <Route path="/" element={<Navigate to="/home" replace />} />
               <Route path="/create" element={<Create setTasks={setTasks} />} />
               <Route path="/edit/:id" element={<Edit tasks={tasks} setTasks={setTasks} />} />
-
-              {/* Unknown paths -> root (which shows Home) */}
-              <Route path="*" element={<Navigate to="/" replace />} />
+              <Route path="*" element={<Navigate to="/home" replace />} />
             </Routes>
           </main>
         </>
