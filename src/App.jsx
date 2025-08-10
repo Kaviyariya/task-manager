@@ -19,37 +19,34 @@ function App() {
     localStorage.setItem("tasks", JSON.stringify(tasks));
   }, [tasks]);
 
+  if (!isLoggedIn) {
+    return <LoginSignup setIsLoggedIn={setIsLoggedIn} />;
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-black via-red-900 to-black text-white">
-      {isLoggedIn ? (
-        <>
-          <nav className="w-full bg-gradient-to-r from-black via-red-900 to-black p-4 flex items-center gap-6 text-white font-semibold text-lg shadow-red-800 shadow-md">
-            <Link to="/" className="hover:underline">Home</Link>
-            <Link to="/create" className="hover:underline">Create New Task</Link>
-            <div className="flex-grow"></div>
-            <button
-              onClick={() => {
-                localStorage.removeItem("isLoggedIn");
-                setIsLoggedIn(false);
-              }}
-              className="hover:underline"
-            >
-              Logout
-            </button>
-          </nav>
+      <nav className="w-full bg-gradient-to-r from-black via-red-900 to-black p-4 flex items-center gap-6 text-white font-semibold text-lg shadow-red-800 shadow-md">
+        <Link to="/" className="hover:underline">Home</Link>
+        <Link to="/create" className="hover:underline">Create New Task</Link>
+        <div className="flex-grow"></div>
+        <button
+          onClick={() => {
+            localStorage.removeItem("isLoggedIn");
+            setIsLoggedIn(false);
+          }}
+          className="hover:underline"
+        >
+          Logout
+        </button>
+      </nav>
 
-          <main className="p-6">
-            <Routes>
-              <Route path="/" element={<Home tasks={tasks} setTasks={setTasks} />} />
-              <Route path="/create" element={<Create setTasks={setTasks} />} />
-              <Route path="/edit/:id" element={<Edit tasks={tasks} setTasks={setTasks} />} />
-              <Route path="*" element={<Home tasks={tasks} setTasks={setTasks} />} />
-            </Routes>
-          </main>
-        </>
-      ) : (
-        <LoginSignup setIsLoggedIn={setIsLoggedIn} />
-      )}
+      <main className="p-6">
+        <Routes>
+          <Route path="/" element={<Home tasks={tasks} setTasks={setTasks} />} />
+          <Route path="/create" element={<Create setTasks={setTasks} />} />
+          <Route path="/edit/:id" element={<Edit tasks={tasks} setTasks={setTasks} />} />
+        </Routes>
+      </main>
     </div>
   );
 }
