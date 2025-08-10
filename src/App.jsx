@@ -10,53 +10,57 @@ function App() {
     const savedTasks = localStorage.getItem("tasks");
     return savedTasks ? JSON.parse(savedTasks) : [];
   });
-
-  const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem("isLoggedIn") === "true");
+  const [isLoggedIn, setIsLoggedIn] = useState(
+    localStorage.getItem("isLoggedIn") === "true"
+  );
 
   useEffect(() => {
     localStorage.setItem("tasks", JSON.stringify(tasks));
   }, [tasks]);
 
-  if (!isLoggedIn) {
-    return <LoginSignup setIsLoggedIn={setIsLoggedIn} />;
-  }
-
   return (
-    <>
-      <nav className="w-full bg-blue-600 p-4 flex justify-center items-center gap-6 text-white font-semibold text-lg shadow-md">
-        <Link to="/home" className="hover:underline">Home</Link>
-        <span>|</span>
-        <Link to="/create" className="hover:underline">Create New Task</Link>
-        <button
-          onClick={() => {
-            localStorage.removeItem("isLoggedIn");
-            setIsLoggedIn(false);
-          }}
-          className="ml-auto text-white underline hover:no-underline"
-        >
-          Logout
-        </button>
-      </nav>
+    <div className="min-h-screen bg-gradient-to-br from-black via-red-900 to-black text-white">
+      {isLoggedIn ? (
+        <>
+          <nav className="w-full bg-gradient-to-r from-black via-red-900 to-black p-4 flex items-center gap-6 text-white font-semibold text-lg shadow-red-800 shadow-md">
+            <Link to="/home" className="hover:underline">Home</Link>
+            <Link to="/create" className="hover:underline">Create New Task</Link>
+            <div className="flex-grow"></div>
+            <button
+              onClick={() => {
+                localStorage.removeItem("isLoggedIn");
+                setIsLoggedIn(false);
+              }}
+              className="hover:underline"
+            >
+              Logout
+            </button>
+          </nav>
 
-      <Routes>
-        <Route path="/home" element={<Home tasks={tasks} setTasks={setTasks} />} />
-        <Route path="/create" element={<Create setTasks={setTasks} />} />
-        <Route path="/edit/:id" element={<Edit tasks={tasks} setTasks={setTasks} />} />
-
-        {/* Default route for "/" shows welcome message */}
-        <Route
-        path="/"
-        element={
-             <div className="text-center text-white text-2xl mt-10">
-             Welcome to Task Manager, create your new task!
-             </div>
-        }
-        />
-
-        {/* Redirect all other unknown paths to /home */}
-        <Route path="*" element={<Navigate to="/home" replace />} />
-      </Routes>
-    </>
+          <main className="p-6">
+            <Routes>
+              <Route path="/home" element={<Home tasks={tasks} setTasks={setTasks} />} />
+              <Route path="/create" element={<Create setTasks={setTasks} />} />
+              <Route path="/edit/:id" element={<Edit tasks={tasks} setTasks={setTasks} />} />
+              
+              {/* Show welcome text on root */}
+              <Route
+                path="/"
+                element={
+                  <div className="text-center text-white text-2xl mt-10">
+                    Welcome to Task Manager, create your new task!
+                  </div>
+                }
+              />
+              {/* Redirect unknown paths to /home */}
+              <Route path="*" element={<Navigate to="/home" replace />} />
+            </Routes>
+          </main>
+        </>
+      ) : (
+        <LoginSignup setIsLoggedIn={setIsLoggedIn} />
+      )}
+    </div>
   );
 }
 
