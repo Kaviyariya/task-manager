@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom"; // ✅ import navigate hook
+import { useNavigate } from "react-router-dom";
 
-const LoginSignup = ({ setIsLoggedIn }) => {
+const Login = ({ setIsLoggedIn }) => {
   const [isLogin, setIsLogin] = useState(true);
 
   const [loginUsername, setLoginUsername] = useState("");
@@ -14,7 +14,7 @@ const LoginSignup = ({ setIsLoggedIn }) => {
   const containerRef = useRef(null);
   const [clicked, setClicked] = useState(false);
 
-  const navigate = useNavigate(); // ✅ initialize navigate
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -31,7 +31,7 @@ const LoginSignup = ({ setIsLoggedIn }) => {
     if (loginUsername.trim() && loginPassword.trim()) {
       localStorage.setItem("isLoggedIn", "true");
       setIsLoggedIn(true);
-      navigate("/"); // ✅ go directly to home after login
+      navigate("/home");  // redirect after login
     } else {
       alert("Please enter both username and password.");
     }
@@ -152,4 +152,4 @@ const LoginSignup = ({ setIsLoggedIn }) => {
   );
 };
 
-export default LoginSignup;
+export default Login;
