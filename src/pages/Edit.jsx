@@ -11,7 +11,7 @@ const Edit = ({ tasks, setTasks }) => {
 
   const [title, setTitle] = useState(taskToEdit.title);
   const [description, setDescription] = useState(taskToEdit.description);
-  const [status, setStatus] = useState(taskToEdit.status);
+  const [status, setStatus] = useState(taskToEdit.status || (taskToEdit.completed ? "Completed" : "Pending"));
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -20,6 +20,7 @@ const Edit = ({ tasks, setTasks }) => {
       title,
       description,
       status,
+      completed: status === "Completed" // Sync completed property with status
     };
 
     const updatedTasks = tasks.map((task) =>
@@ -27,51 +28,52 @@ const Edit = ({ tasks, setTasks }) => {
     );
 
     setTasks(updatedTasks);
-    navigate("/");
+    navigate("/home"); // Changed from "/" to "/home" for consistency
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="max-w-xl mx-auto p-6 bg-white shadow-md rounded-lg mt-10"
-    >
-      <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">
-        Edit Task
-      </h2>
-
-      <input
-        type="text"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-        placeholder="Title"
-        required
-        className="w-full px-4 py-2 mb-4 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
-      />
-
-      <textarea
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
-        placeholder="Description"
-        required
-        className="w-full px-4 py-2 mb-4 border rounded resize-none h-28 focus:outline-none focus:ring-2 focus:ring-blue-400"
-      />
-
-      <select
-        value={status}
-        onChange={(e) => setStatus(e.target.value)}
-        className="w-full px-4 py-2 mb-4 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+    <div>
+      <form
+        onSubmit={handleSubmit}
+        className="max-w-xl mx-auto p-6 bg-white shadow-md rounded-lg mt-10"
       >
-        <option value="Pending">Pending</option>
-        <option value="Completed">Completed</option>
-      </select>
+        <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">
+          Edit Task
+        </h2>
 
-      <button
-        type="submit"
-        className="w-full bg-green-600 text-white font-semibold py-2 rounded hover:bg-green-700 transition"
-      >
-        Update Task
-      </button>
-    </form>
+        <input
+          type="text"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          placeholder="Title"
+          required
+          className="w-full px-4 py-2 mb-4 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400 text-gray-900"
+        />
+
+        <textarea
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          placeholder="Description"
+          className="w-full px-4 py-2 mb-4 border rounded resize-none h-28 focus:outline-none focus:ring-2 focus:ring-blue-400 text-gray-900"
+        />
+
+        <select
+          value={status}
+          onChange={(e) => setStatus(e.target.value)}
+          className="w-full px-4 py-2 mb-4 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400 text-gray-900"
+        >
+          <option value="Pending">Pending</option>
+          <option value="Completed">Completed</option>
+        </select>
+
+        <button
+          type="submit"
+          className="w-full bg-green-600 text-white font-semibold py-2 rounded hover:bg-green-700 transition"
+        >
+          Update Task
+        </button>
+      </form>
+    </div>
   );
 };
 
