@@ -31,7 +31,7 @@ const Login = ({ setIsLoggedIn }) => {
     if (loginUsername.trim() && loginPassword.trim()) {
       localStorage.setItem("isLoggedIn", "true");
       setIsLoggedIn(true);
-      navigate("/home");  // redirect after login
+      navigate("/home");  // Redirect to home page after login
     } else {
       alert("Please enter both username and password.");
     }
