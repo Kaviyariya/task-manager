@@ -20,7 +20,7 @@ const Home = ({ tasks, setTasks }) => {
       <h2 className="text-2xl font-bold mb-4">Your Tasks</h2>
 
       {tasks.length === 0 ? (
-        <div className="p-8 bg-white/10 rounded-lg text-center text-gray-300">
+        <div className="flex justify-center items-center h-[60vh] text-gray-300 text-xl font-semibold">
           No tasks yet. Create one to get started!
         </div>
       ) : (
@@ -62,3 +62,4 @@ const Home = ({ tasks, setTasks }) => {
 };
 
 export default Home;
+
