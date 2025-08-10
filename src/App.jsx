@@ -25,7 +25,7 @@ function App() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-black via-red-900 to-black text-white">
       {isLoggedIn ? (
-        <>
+        <div className="min-h-screen bg-gradient-to-br from-black via-red-900 to-black">
           <nav className="w-full bg-gradient-to-r from-black via-red-900 to-black p-4 flex items-center gap-6 text-white font-semibold text-lg shadow-red-800 shadow-md">
             <Link to="/home" className="hover:underline">Home</Link>
             <Link to="/create" className="hover:underline">Create New Task</Link>
@@ -41,7 +41,7 @@ function App() {
             </button>
           </nav>
 
-          <main className="p-6">
+          <main className="p-6 min-h-screen">
             <Routes>
               <Route path="/home" element={<Home tasks={tasks} setTasks={setTasks} />} />
               <Route path="/" element={<Navigate to="/home" replace />} />
@@ -50,7 +50,7 @@ function App() {
               <Route path="*" element={<Navigate to="/home" replace />} />
             </Routes>
           </main>
-        </>
+        </div>
       ) : (
         <LoginSignup setIsLoggedIn={setIsLoggedIn} />
       )}
