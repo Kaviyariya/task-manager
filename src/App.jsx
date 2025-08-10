@@ -22,10 +22,13 @@ function App() {
     localStorage.setItem("isLoggedIn", isLoggedIn.toString());
   }, [isLoggedIn]);
 
+  // Debug: Log current state
+  console.log("App State:", { isLoggedIn, tasksCount: tasks.length });
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-black via-red-900 to-black text-white">
       {isLoggedIn ? (
-        <div className="min-h-screen bg-gradient-to-br from-black via-red-900 to-black">
+        <div className="min-h-screen">
           <nav className="w-full bg-gradient-to-r from-black via-red-900 to-black p-4 flex items-center gap-6 text-white font-semibold text-lg shadow-red-800 shadow-md">
             <Link to="/home" className="hover:underline">Home</Link>
             <Link to="/create" className="hover:underline">Create New Task</Link>
@@ -41,13 +44,13 @@ function App() {
             </button>
           </nav>
 
-          <main className="p-6 min-h-screen">
+          <main className="p-6">
             <Routes>
+              <Route path="/" element={<Home tasks={tasks} setTasks={setTasks} />} />
               <Route path="/home" element={<Home tasks={tasks} setTasks={setTasks} />} />
-              <Route path="/" element={<Navigate to="/home" replace />} />
               <Route path="/create" element={<Create setTasks={setTasks} />} />
               <Route path="/edit/:id" element={<Edit tasks={tasks} setTasks={setTasks} />} />
-              <Route path="*" element={<Navigate to="/home" replace />} />
+              <Route path="*" element={<Home tasks={tasks} setTasks={setTasks} />} />
             </Routes>
           </main>
         </div>
