@@ -18,10 +18,11 @@ const Create = ({ setTasks }) => {
       title: title.trim(),
       description: description.trim(),
       completed: false,
+      status: "Pending" // Added status property for consistency with Edit component
     };
 
     setTasks(prev => [...prev, newTask]);
-    navigate("/");
+    navigate("/home"); // Changed from "/" to "/home" for consistency
   };
 
   return (
@@ -41,7 +42,7 @@ const Create = ({ setTasks }) => {
             value={title}
             onChange={e => setTitle(e.target.value)}
             placeholder="Enter task title"
-            className="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-gray-900"
             required
           />
         </div>
@@ -56,7 +57,7 @@ const Create = ({ setTasks }) => {
             value={description}
             onChange={e => setDescription(e.target.value)}
             placeholder="Enter task description (optional)"
-            className="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none"
+            className="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none text-gray-900"
           />
         </div>
 
