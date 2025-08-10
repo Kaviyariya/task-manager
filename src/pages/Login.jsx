@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
 
 const Login = ({ setIsLoggedIn }) => {
   const [isLogin, setIsLogin] = useState(true);
@@ -14,8 +13,6 @@ const Login = ({ setIsLoggedIn }) => {
   const containerRef = useRef(null);
   const [clicked, setClicked] = useState(false);
 
-  const navigate = useNavigate();
-
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (containerRef.current && !containerRef.current.contains(event.target)) {
@@ -29,9 +26,8 @@ const Login = ({ setIsLoggedIn }) => {
   const handleLogin = (e) => {
     e.preventDefault();
     if (loginUsername.trim() && loginPassword.trim()) {
-      localStorage.setItem("isLoggedIn", "true");
+      // Set login state first, then localStorage will be updated by useEffect in App.jsx
       setIsLoggedIn(true);
-      navigate("/home");  // Redirect to home page after login
     } else {
       alert("Please enter both username and password.");
     }
