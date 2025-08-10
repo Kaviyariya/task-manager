@@ -39,24 +39,15 @@ function App() {
 
           <main className="p-6">
             <Routes>
+              {/* Both /home and / (root) render the Home component */}
               <Route path="/home" element={<Home tasks={tasks} setTasks={setTasks} />} />
+              <Route path="/" element={<Home tasks={tasks} setTasks={setTasks} />} />
+
               <Route path="/create" element={<Create setTasks={setTasks} />} />
               <Route path="/edit/:id" element={<Edit tasks={tasks} setTasks={setTasks} />} />
-              
-              {/* Show welcome message on root */}
-              <Route
-                path="/"
-                element={
-                  <div className="flex justify-center items-center h-[70vh]">
-                    <h2 className="text-center text-white text-2xl font-bold">
-                      Welcome to Task Manager, create your new task!
-                    </h2>
-                  </div>
-                }
-              />
 
-              {/* Redirect unknown paths to /home */}
-              <Route path="*" element={<Navigate to="/home" replace />} />
+              {/* Unknown paths -> root (which shows Home) */}
+              <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </main>
         </>
