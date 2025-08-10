@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom"; // ✅ import navigate hook
 
 const LoginSignup = ({ setIsLoggedIn }) => {
   const [isLogin, setIsLogin] = useState(true);
@@ -12,6 +13,8 @@ const LoginSignup = ({ setIsLoggedIn }) => {
 
   const containerRef = useRef(null);
   const [clicked, setClicked] = useState(false);
+
+  const navigate = useNavigate(); // ✅ initialize navigate
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -28,6 +31,7 @@ const LoginSignup = ({ setIsLoggedIn }) => {
     if (loginUsername.trim() && loginPassword.trim()) {
       localStorage.setItem("isLoggedIn", "true");
       setIsLoggedIn(true);
+      navigate("/"); // ✅ go directly to home after login
     } else {
       alert("Please enter both username and password.");
     }
