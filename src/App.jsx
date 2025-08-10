@@ -43,15 +43,9 @@ function App() {
               <Route path="/create" element={<Create setTasks={setTasks} />} />
               <Route path="/edit/:id" element={<Edit tasks={tasks} setTasks={setTasks} />} />
               
-              {/* Show welcome text on root */}
-              <Route
-                path="/"
-                element={
-                  <div className="text-center text-white text-2xl mt-10">
-                    Welcome to Task Manager, create your new task!
-                  </div>
-                }
-              />
+              {/* Redirect root path to home */}
+              <Route path="/" element={<Navigate to="/home" replace />} />
+
               {/* Redirect unknown paths to /home */}
               <Route path="*" element={<Navigate to="/home" replace />} />
             </Routes>
